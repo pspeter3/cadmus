@@ -1,8 +1,10 @@
 var AsanaAuth = require('./auth/asana');
+var Connections = require('./connections');
 var LinkedInAuth = require('./auth/linkedin');
 var React = require('react');
 
 var asanaAuth = React.createFactory(AsanaAuth);
+var connections = React.createFactory(Connections);
 var linkedInAuth = React.createFactory(LinkedInAuth);
 var pt = React.PropTypes;
 
@@ -17,7 +19,7 @@ module.exports = React.createClass({
       hasLinkedInInit: false
     };
   },
-  componentDidMount: function() {
+  componentWillMount: function() {
     var me = this;
     var interval = setInterval(function() {
       if (me.props.linkedIn.User !== undefined) {
@@ -48,6 +50,6 @@ module.exports = React.createClass({
         onClick: this.authorizeLinkedIn
       });
     }
-    return null;
+    return connections(this.props);
   }
 });
