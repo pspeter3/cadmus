@@ -11,7 +11,6 @@ var config = {
   concise: 'bower_components/concise/scss',
   bundle: 'cadmus.js',
   dist: 'dist',
-  fontAwesome: 'bower_components/font-awesome/scss',
   gulp: 'gulpfile.js',
   root: 'index.js',
   src: 'src/**/*.js',
@@ -56,8 +55,7 @@ gulp.task('static', ['scripts', 'styles'], static({
 gulp.task('styles', styles({
   dest: config.dist,
   include: [
-    config.concise,
-    config.fontAwesome
+    config.concise
   ],
   src: config.styles
 }));
@@ -65,6 +63,6 @@ gulp.task('styles', styles({
 gulp.task('test', ['spec']);
 
 gulp.task('watch', watch({
-  scripts: config.src,
+  scripts: [config.root, config.src],
   styles: config.styles
 }));
