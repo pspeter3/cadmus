@@ -6,7 +6,7 @@ function Asana(clientId, href) {
   this.href = href;
   this.accessToken = null;
   if (this.href.hash !== null) {
-    var params = querystring.parse(this.props.href.hash.replace('#', ''));
+    var params = querystring.parse(this.href.hash.replace('#', ''));
     if (params.access_token !== undefined) {
       this.accessToken = params.access_token;
     }
