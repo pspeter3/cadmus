@@ -1,0 +1,21 @@
+{
+  "name": "cadmus",
+  "homepage": "https://github.com/pspeter3/cadmus",
+  "authors": [
+    "Phips Peter <pspeter333@gmail.com>"
+  ],
+  "description": "A simple webpage to upload connections from social networks to Asana",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "concise": "~2.0.0",
+    "font-awesome": "~4.2.0"
+  }
+}
