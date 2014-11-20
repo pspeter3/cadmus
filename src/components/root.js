@@ -15,7 +15,6 @@ module.exports = React.createClass({
     if (this.props.href.hash !== null) {
       var params = querystring.parse(this.props.href.hash.replace('#', ''));
       if (params.access_token !== undefined) {
-        debugger;
         return null;
       }
     }
