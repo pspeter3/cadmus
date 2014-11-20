@@ -1,26 +1,21 @@
-var Asana = require('./auth/asana');
+var AsanaAuth = require('./auth/asana');
 var React = require('react');
-var querystring = require('querystring');
 
-var asana = React.createFactory(Asana);
+var asanaAuth = React.createFactory(AsanaAuth);
 var pt = React.PropTypes;
 
 module.exports = React.createClass({
   displayName: 'Root',
   propTypes: {
-    asanaApiKey: pt.string.isRequired,
-    href: pt.object.isRequired
+    asana: pt.object.isRequired,
+    linkedIn: pt.object.isRequired
   },
   render: function() {
-    if (this.props.href.hash !== null) {
-      var params = querystring.parse(this.props.href.hash.replace('#', ''));
-      if (params.access_token !== undefined) {
-        return null;
-      }
+    if (!this.props.asana.isAuthorized()) {
+      return asanaAuth({
+        asana: this.props.asana
+      });
     }
-    return asana({
-      asanaApiKey: this.props.asanaApiKey,
-      href: this.props.href
-    });
+    return null;
   }
 });
