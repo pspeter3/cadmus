@@ -15,7 +15,6 @@
     "tests"
   ],
   "devDependencies": {
-    "concise": "~2.0.0",
-    "font-awesome": "~4.2.0"
+    "concise": "~2.0.0"
   }
 }

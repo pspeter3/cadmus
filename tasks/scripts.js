@@ -20,7 +20,7 @@ var build = module.exports = function(opts) {
     return bundler;
   };
   return function() {
-    browserify()
+    return browserify()
       .bundle()
       .pipe(plugins.vinylSourceStream(opts.name))
       .pipe(gulp.dest(opts.dest));
