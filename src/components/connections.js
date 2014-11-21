@@ -12,16 +12,25 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       connections: null,
-      filtered: {}
+      filtered: {},
+      taskId: ''
     };
   },
   componentWillMount: function() {
     var me = this;
-    me.props.linkedIn.API.Connections('me').result(function(connections) {
-      me.setState({
-        connections: connections
+    me.props.linkedIn.API.Connections('me')
+      .fields('id',
+        'first-name',
+        'last-name',
+        'location:(country:(code))',
+        'industry',
+        'num-connections')
+      .result(function(connections) {
+        console.log(connections.values[0]);
+        me.setState({
+          connections: connections
+        });
       });
-    });
   },
   _renderHeader: function() {
     return d.thead({
@@ -35,9 +44,9 @@ module.exports = React.createClass({
   _renderRows: function() {
     var me = this;
     return d.tbody({
-      children: me.state.connections.values.map(function(person) {
+      children: me.state.connections.values.map(function(person, index) {
         return d.tr({
-          key: person.id,
+          key: person.id + index,
           children: [
             d.td(null, d.input({
               checked: me.state.filtered[person.id] === undefined,
@@ -60,6 +69,15 @@ module.exports = React.createClass({
       })
     });
   },
+  _onChange: function(event) {
+    this.setState({
+      taskId: event.target.value
+    });
+  },
+  _onSubmit: function(event) {
+    console.log('test');
+    event.preventDefault();
+  },
   _maybeRenderConnections: function() {
     if (this.state.connections === null) {
       return d.h1({
@@ -68,11 +86,33 @@ module.exports = React.createClass({
       });
     }
     return d.div({
-      className: 'table-responsive'
-    }, d.table({
-      className: 'table table-full',
-      children: [this._renderHeader(), this._renderRows()]
-    }));
+      children: [
+        d.h1(null, 'Connections'),
+        d.p(null, 'Select connections that you are happy sharing'),
+        d.form({
+          children: [
+            d.input({
+              className: 'form-item',
+              placeholder: 'Asana Task Id',
+              type: 'number',
+              value: this.state.taskId,
+              onChange: this._onChange
+            }),
+            d.input({
+              className: 'btn form-item',
+              type: 'submit',
+              onClick: this._onSubmit
+            })
+          ]
+        }),
+        d.div({
+          className: 'table-responsive'
+        }, d.table({
+          className: 'table table-full',
+          children: [this._renderHeader(), this._renderRows()]
+        }))
+      ]
+    });
   },
   render: function() {
     return d.div({
